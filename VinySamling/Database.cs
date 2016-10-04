@@ -54,6 +54,122 @@ namespace VinySamling
             
         }
 
+        private static void ShowList()
+        {
+            Console.Clear();
+            GUI.ShowListGui();
+            Console.WriteLine("\n");
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                Console.WriteLine(i + 1 + ". " + list[i]);
+            }
+
+
+            Console.WriteLine("\nÄr du färdig med Listan? tryck enter för att komma ut");
+            Console.Read();
+            BackOrOut();
+        }
+
+        private static void AddVinyl()
+        {
+
+
+            Console.WriteLine();
+            Vinyl.Name = InputController.NameController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Album = InputController.AlbumController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Artist = InputController.ArtistController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Year = InputController.YearController();
+
+            string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";" + Environment.NewLine;
+            File.AppendAllText(@"C:\Users\Housame\List.txt", vinylLine);
+            for (int i = 0; i < list.Length + 2; i++)
+            {
+                InputController.ClearOneLine();
+            }
+            Console.WriteLine("klart!!!");
+            list = Vinyl.ListCreator();
+            
+            Console.WriteLine("Vill du lägga in en till? Tryck 1 annars tryck 2 för att komma ut ");
+            int caseSwitch;
+            string input;
+            while (true)
+            {
+
+                input = Console.ReadLine();
+
+                if (input == "1" || input == "2")
+
+                    caseSwitch = int.Parse(input);
+
+                else
+
+                    caseSwitch = 0;
+
+                switch (caseSwitch)
+                {
+                    case 1:
+                        Console.Clear();
+                        AddVinyl();
+                        return;
+                    case 2:
+
+                        BackOrOut();
+                        return;
+
+                    default:
+                        Console.WriteLine("Vänlligen skriv in ett giltigt val 1 eller 2!");
+                        Program.Timer(1);
+                        Console.Clear();
+                        break;
+                }
+            }
+
+
+        }
+
+        private static void EditList()
+        {
+            Console.WriteLine("\n");
+            for (int i = 0; i < list.Length; i++)
+            {
+                Console.WriteLine(i + 1 + ". " + list[i]);
+            }
+            Console.WriteLine("Vänligen välj vilken låt vill du ändra på!");
+            int input = InputNumberOfLine();
+            Console.WriteLine("Du valde att ändra på låten nummer {0}", input);
+
+            Console.WriteLine();
+            Vinyl.Name = InputController.NameController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Album = InputController.AlbumController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Artist = InputController.ArtistController().ToUpper();
+            Console.WriteLine();
+            Vinyl.Year = InputController.YearController();
+            
+            
+            string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";";
+            var tempList = new List<string>(File.ReadAllLines(@"C: \Users\Housame\List.txt"));
+            tempList[input - 1] = vinylLine;
+            File.WriteAllLines(@"C: \Users\Housame\List.txt", tempList);
+            for (int i = 0; i < list.Length + 11; i++)
+            {
+                InputController.ClearOneLine();
+            }
+            Console.WriteLine("klart!!!");
+            list = Vinyl.ListCreator();
+            for (int i = 0; i < list.Length; i++)
+            {
+                Console.WriteLine(i + 1 + ". " + list[i]);
+            }
+            EditMoreOrNot();
+
+        }
+
         private static void RemoveVinyl()
         {
             
@@ -63,16 +179,14 @@ namespace VinySamling
                 Console.WriteLine(i+1 + ". " + list[i]);
             }
 
-           int input = InputNumberOfLine();
+           int input = InputNumberOfLine();// kontroll för att input ska vara en av nr från listan
             Console.WriteLine("Du valde att ta bort låten nummer {0}",input);
 
-            var tempFile = new List<string>(System.IO.File.ReadAllLines(@"C: \Users\Housame\List.txt"));
-            
+            //sätta filen i en list och sen ta bort raden, därefter överför listan till file.txt.
+            var tempFile = new List<string>(File.ReadAllLines(@"C: \Users\Housame\List.txt"));
             tempFile.RemoveAt(input-1);
             File.WriteAllLines(@"C: \Users\Housame\List.txt", tempFile.ToArray());
-            
-            
-
+            // ta bort raderna för den listan som visades förr, grafisk optimization
             for (int i = 0; i < list.Length + 2; i++)
             {
                 InputController.ClearOneLine();
@@ -155,52 +269,10 @@ namespace VinySamling
             return input;
         }
 
-        private static void EditList()
+        private static void EditMoreOrNot()
         {
-            Console.WriteLine("\n");
-            for (int i = 0; i < list.Length; i++)
-            {
-                Console.WriteLine(i+1 + ". " + list[i]);
-            }
-            Console.WriteLine("Vänligen välj vilken låt vill du ändra på!");
-            int input = InputNumberOfLine();
-            Console.WriteLine("Du valde att ändra på låten nummer {0}", input);
-
-            list[input] = null;
-            
-
-            Console.WriteLine();
-            Vinyl.Name = InputController.NameController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Album = InputController.AlbumController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Artist = InputController.ArtistController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Year = InputController.YearController();
-
-            string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";"+ Environment.NewLine;
-            File.WriteAllText(@"C: \Users\Housame\List.txt", vinylLine);
-
-
-        }
-
-        private static void AddVinyl()// kontrollstrukturer är färdiga men kolla InputController för Year / try catch funkar
-        {
-            
-
-            Console.WriteLine();
-            Vinyl.Name = InputController.NameController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Album = InputController.AlbumController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Artist = InputController.ArtistController().ToUpper();
-            Console.WriteLine();
-            Vinyl.Year = InputController.YearController();
-
-            string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";"+Environment.NewLine;
-            File.AppendAllText(@"C:\Users\Housame\List.txt",vinylLine);
-
-            Console.WriteLine("Vill du lägga in en till? Tryck 1 annars tryck 2 för att komma ut ");
+           
+            Console.WriteLine("Vill du redigera en till? Tryck 1 annars tryck 2 för att komma ut ");
             int caseSwitch;
             string input;
             while (true)
@@ -220,10 +292,10 @@ namespace VinySamling
                 {
                     case 1:
                         Console.Clear();
-                        AddVinyl();
+                        EditList();
                         return;
                     case 2:
-                        
+
                         BackOrOut();
                         return;
 
@@ -234,26 +306,6 @@ namespace VinySamling
                         break;
                 }
             }
-
-
-        }
-
-        private static void ShowList()
-        {
-            
-            Console.Clear();
-            GUI.ShowListGui();
-            Console.WriteLine("\n");
-            var tempList = File.ReadAllLines(@"C:\Users\Housame\List.txt");
-            for (int i = 0; i < tempList.Length; i++)
-            {
-                Console.WriteLine(i+1 +". "+ tempList[i]);
-            }
-          
-
-            Console.WriteLine("\nÄr du färdig med Listan? tryck enter för att komma ut");
-            Console.Read();
-            BackOrOut();
         }
 
         private static void BackOrOut()

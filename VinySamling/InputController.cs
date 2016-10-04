@@ -83,21 +83,41 @@ namespace VinySamling
 
         public static int YearController()// input måste vara 4 siffror
         {
-
+            int input=0;
             do
             {
                 Console.Write(" Var vänlig och skriv in vilket år släpptes skivan: ");
-                int input = int.Parse(Console.ReadLine());
+                try
+                {
+                    input = int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    ClearOneLine();
+                    Console.WriteLine("Var vänlig skriv in ett giltigt year!!");
+                    Program.Timer(1.5);
+                    
+                    
+                };
+
                 if (input >= 1948 && input <= 2016)
                 {
-                    
+
                     return input;
+                }
+                else if (input > 2016)
+                {
+                    ClearOneLine();
+                    Console.WriteLine("Idag är {0} nu!! Var vänlig skriv in ett giltigt year!!", DateTime.Now.ToString("yyyy"));
+                    Program.Timer(1.5);
+                    ClearOneLine();
+
                 }
                 else
                 {
                     ClearOneLine();
-                    Console.WriteLine("Var vänlig skriv in ett giltigt namn!!");
-                    Program.Timer(1);
+                    Console.WriteLine("VinylSkivor kom först året 1948!! Var vänlig skriv in ett giltigt year!!");
+                    Program.Timer(1.5);
                     ClearOneLine();
 
 

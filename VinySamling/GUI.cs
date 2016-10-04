@@ -118,7 +118,6 @@ namespace VinySamling
             Console.WriteLine("        **                                                                                                            **");
             Console.WriteLine("        **                                             4.Ta bort                                                      **");
             Console.WriteLine("        **                                                                                                            **");
-            Console.WriteLine("        **                              5. Söka en skiva (fixas om det finns tid)                                     **");
             Console.WriteLine("        **                                                                                                            **");
             Console.WriteLine("        **                                                                                                            **");
             Console.WriteLine("        **                                                                                                            **");

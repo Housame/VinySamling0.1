@@ -11,6 +11,7 @@ namespace VinySamling
     {
         static void Main(string[] args)
         {
+            Vinyl.ListCreator();
             GUI.Start();
             Database.Choice();
         }
