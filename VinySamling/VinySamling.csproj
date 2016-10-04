@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Database.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="ImportFiles.cs" />
     <Compile Include="InputController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

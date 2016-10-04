@@ -10,6 +10,7 @@ namespace VinySamling
     {
         public static void Start()
         {
+
             StartGui();
             HeadGui();
         }
@@ -43,6 +44,26 @@ namespace VinySamling
             Console.WriteLine(@"###    #     ####       #    #       ####    ####   #    #  #    #   ####   #    #  #    #      #   ");
             Program.Timer(3);
             Console.Clear();
+        }
+
+        public static void FileChoiceGui()
+        {
+            Console.WriteLine("        ****************************************************************************************************************");
+            Console.WriteLine("         **************************************************************************************************************");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                 Vänligen välj en av alternativen                                           **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                     1. Skapa en Lista                                                      **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                     2. Ladda upp en Lista                                                  **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("        **                                                                                                            **");
+            Console.WriteLine("         **************************************************************************************************************");
+            Console.WriteLine("        ****************************************************************************************************************");
         }
 
         public static void ByeByeGui()

@@ -39,23 +39,7 @@ namespace VinySamling
             set { year = value; }
         }
 
-        public static string[] VinylList { get;  set; }
-
-        public static string[] ListCreator()
-        {
-
-            try
-            {
-                VinylList = File.ReadAllLines(@"C: \Users\Housame\List.txt");
-            }
-            catch (FileNotFoundException)
-            {
-                File.WriteAllText(@"C: \Users\Housame\List.txt","");
-                VinylList = File.ReadAllLines(@"C: \Users\Housame\List.txt");
-            }
-
-            return VinylList;
-        }
+       
     }
 
 }

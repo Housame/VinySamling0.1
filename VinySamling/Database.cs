@@ -10,7 +10,8 @@ namespace VinySamling
     class Database
 
     {
-        static string[] list = Vinyl.ListCreator();
+        static string[] list= ImportFiles.VinylList ;
+        static string listPath = ImportFiles.FilePath +@"\"+ ImportFiles.FileName+".txt";
         
 
         public static void Choice()
@@ -74,7 +75,7 @@ namespace VinySamling
         private static void AddVinyl()
         {
 
-
+            
             Console.WriteLine();
             Vinyl.Name = InputController.NameController().ToUpper();
             Console.WriteLine();
@@ -85,13 +86,13 @@ namespace VinySamling
             Vinyl.Year = InputController.YearController();
 
             string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";" + Environment.NewLine;
-            File.AppendAllText(@"C:\Users\Housame\List.txt", vinylLine);
-            for (int i = 0; i < list.Length + 2; i++)
+            File.AppendAllText(@listPath, vinylLine);
+            for (int i = 0; i < 8; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = Vinyl.ListCreator();
+            list = File.ReadAllLines(listPath);
             
             Console.WriteLine("Vill du lägga in en till? Tryck 1 annars tryck 2 för att komma ut ");
             int caseSwitch;
@@ -153,15 +154,15 @@ namespace VinySamling
             
             
             string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";";
-            var tempList = new List<string>(File.ReadAllLines(@"C: \Users\Housame\List.txt"));
+            var tempList = new List<string>(File.ReadAllLines(@listPath));
             tempList[input - 1] = vinylLine;
-            File.WriteAllLines(@"C: \Users\Housame\List.txt", tempList);
+            File.WriteAllLines(@listPath, tempList);
             for (int i = 0; i < list.Length + 11; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = Vinyl.ListCreator();
+            list = File.ReadAllLines(listPath);
             for (int i = 0; i < list.Length; i++)
             {
                 Console.WriteLine(i + 1 + ". " + list[i]);
@@ -183,16 +184,16 @@ namespace VinySamling
             Console.WriteLine("Du valde att ta bort låten nummer {0}",input);
 
             //sätta filen i en list och sen ta bort raden, därefter överför listan till file.txt.
-            var tempFile = new List<string>(File.ReadAllLines(@"C: \Users\Housame\List.txt"));
+            var tempFile = new List<string>(File.ReadAllLines(@listPath));
             tempFile.RemoveAt(input-1);
-            File.WriteAllLines(@"C: \Users\Housame\List.txt", tempFile.ToArray());
+            File.WriteAllLines(@listPath, tempFile.ToArray());
             // ta bort raderna för den listan som visades förr, grafisk optimization
             for (int i = 0; i < list.Length + 2; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = Vinyl.ListCreator();
+            list = File.ReadAllLines(listPath);
             for (int i = 0; i < list.Length; i++)
             {
                 Console.WriteLine(i+1 + ". " + list[i]);
