@@ -9,15 +9,16 @@ namespace VinySamling
 {
     class ImportFiles
     {
+        public static FileName fileName;
+        public static VinylList vinylList;
+
         static string filePath;
         public static string FilePath
         {
             get { return filePath; }
             set { filePath = value; }
         }
-        public static FileName fileName;
-       
-
+   
         static string folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         public static string FolderName
@@ -67,7 +68,8 @@ namespace VinySamling
                         Console.WriteLine("\n\n  Skriv in listans namn som du vill ladda upp:");
                         tempName = TryFindFile(Console.ReadLine());
                         fileName = new FileName(tempName);
-                        VinylList = File.ReadAllLines(FilePath + @"\" + fileName.name + ".txt");
+                        string[] tempVinylList = File.ReadAllLines(FilePath + @"\" + fileName.name + ".txt");
+                        vinylList = new VinylList(tempVinylList);
                         return;
                     case 3:
                         Console.Clear();
@@ -137,24 +139,19 @@ namespace VinySamling
             Directory.CreateDirectory(filePath);
         }
 
-        
-        static string[] vinylList;
-
-        public static string[] VinylList
-        {
-            get { return vinylList; }
-            set { vinylList = value; }
-        }
 
 
-        public static string[] ListCreator()
+        public static VinylList ListCreator()
         {
             
             filePathString = FilePath + @"\" + fileName.name + ".txt";
 
             File.WriteAllText(filePathString, "");
+            string[] tempVinylList= File.ReadAllLines(filePathString);
+            vinylList = new VinylList(tempVinylList);
+            return vinylList;
 
-            return vinylList= File.ReadAllLines(filePathString);
+            
         }
 
 

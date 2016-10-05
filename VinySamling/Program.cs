@@ -20,7 +20,7 @@ namespace VinySamling
                 
                 while (endProgram)
                 {
-                    ImportFiles.FileChoice();
+                    
                     
                     Console.Clear();
                     GUI.HeadGui();

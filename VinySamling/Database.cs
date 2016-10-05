@@ -11,7 +11,7 @@ namespace VinySamling
 
     {
         #region
-        static string[] list= ImportFiles.VinylList ;
+        static string[] list= ImportFiles.vinylList.name ;
         static string listPath = ImportFiles.FilePath +@"\"+ ImportFiles.fileName.name+".txt";
         #endregion
 
@@ -47,7 +47,7 @@ namespace VinySamling
                         RemoveVinyl();
                         return;
                     case 5:
-                        ImportFiles.VinylList = null;
+                        
                         Program.endProgram = false;
                         
                         return;
@@ -71,7 +71,7 @@ namespace VinySamling
             Console.Clear();
             GUI.ShowListGui();
             Console.WriteLine("\n");
-
+            Console.WriteLine(listPath);
             for (int i = 0; i < list.Length; i++)
             {
                 Console.WriteLine(i + 1 + ". " + list[i]);
