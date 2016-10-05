@@ -11,8 +11,8 @@ namespace VinySamling
 
     {
         #region
-        static string[] list= ImportFiles.vinylList.name ;
-        static string listPath = ImportFiles.FilePath +@"\"+ ImportFiles.fileName.name+".txt";
+        
+       
         #endregion
 
         public static void Choice()
@@ -47,9 +47,7 @@ namespace VinySamling
                         RemoveVinyl();
                         return;
                     case 5:
-                        
-                        Program.endProgram = false;
-                        
+                        ImportFiles.FileChoice();
                         return;
                     case 6:
                         GUI.ByeByeGui();
@@ -71,10 +69,10 @@ namespace VinySamling
             Console.Clear();
             GUI.ShowListGui();
             Console.WriteLine("\n");
-            Console.WriteLine(listPath);
-            for (int i = 0; i < list.Length; i++)
+            Console.WriteLine(ImportFiles.fileName.filePathString);
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length; i++)
             {
-                Console.WriteLine(i + 1 + ". " + list[i]);
+                Console.WriteLine(i + 1 + ". " + ImportFiles.fileName.vinylList[i]);
             }
 
 
@@ -99,13 +97,13 @@ namespace VinySamling
             Vinyl.Year = InputController.YearController();
 
             string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";" + Environment.NewLine;
-            File.AppendAllText(@listPath, vinylLine);
+            File.AppendAllText(@ImportFiles.fileName.filePathString, vinylLine);
             for (int i = 0; i < 8; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = File.ReadAllLines(listPath);
+            ImportFiles.fileName.vinylList = File.ReadAllLines(ImportFiles.fileName.filePathString);
             
             Console.WriteLine("Vill du lägga in en till? Tryck 1 annars tryck 2 för att komma ut ");
             int caseSwitch;
@@ -150,9 +148,9 @@ namespace VinySamling
             Console.Clear();
             GUI.EditListGui();
             Console.WriteLine("\n\n");
-            for (int i = 0; i < list.Length; i++)
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length; i++)
             {
-                Console.WriteLine(i + 1 + ". " + list[i]);
+                Console.WriteLine(i + 1 + ". " + ImportFiles.fileName.vinylList[i]);
             }
             Console.WriteLine("Vänligen välj vilken låt vill du ändra på!");
             int input = InputNumberOfLine();
@@ -169,18 +167,18 @@ namespace VinySamling
             
             
             string vinylLine = Vinyl.Name + " " + Vinyl.Album + " " + Vinyl.Artist + " " + Vinyl.Year + ";";
-            var tempList = new List<string>(File.ReadAllLines(@listPath));
+            var tempList = new List<string>(File.ReadAllLines(@ImportFiles.fileName.filePathString));
             tempList[input - 1] = vinylLine;
-            File.WriteAllLines(@listPath, tempList);
-            for (int i = 0; i < list.Length + 11; i++)
+            File.WriteAllLines(@ImportFiles.fileName.filePathString, tempList);
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length + 11; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = File.ReadAllLines(listPath);
-            for (int i = 0; i < list.Length; i++)
+            ImportFiles.fileName.vinylList = File.ReadAllLines(ImportFiles.fileName.filePathString);
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length; i++)
             {
-                Console.WriteLine(i + 1 + ". " + list[i]);
+                Console.WriteLine(i + 1 + ". " + ImportFiles.fileName.vinylList[i]);
             }
             EditMoreOrNot();
 
@@ -191,28 +189,28 @@ namespace VinySamling
             Console.Clear();
             GUI.RemoveVinylGui();
             Console.WriteLine("\n\n");
-            for (int i = 0; i < list.Length; i++)
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length; i++)
             {
-                Console.WriteLine(i+1 + ". " + list[i]);
+                Console.WriteLine(i+1 + ". " + ImportFiles.fileName.vinylList[i]);
             }
 
            int input = InputNumberOfLine();// kontroll för att input ska vara en av nr från listan
             Console.WriteLine("Du valde att ta bort låten nummer {0}",input);
 
             //sätta filen i en list och sen ta bort raden, därefter överför listan till file.txt.
-            var tempFile = new List<string>(File.ReadAllLines(@listPath));
+            var tempFile = new List<string>(File.ReadAllLines(@ImportFiles.fileName.filePathString));
             tempFile.RemoveAt(input-1);
-            File.WriteAllLines(@listPath, tempFile.ToArray());
+            File.WriteAllLines(@ImportFiles.fileName.filePathString, tempFile.ToArray());
             // ta bort raderna för den listan som visades förr, grafisk optimization
-            for (int i = 0; i < list.Length + 2; i++)
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length + 2; i++)
             {
                 InputController.ClearOneLine();
             }
             Console.WriteLine("klart!!!");
-            list = File.ReadAllLines(listPath);
-            for (int i = 0; i < list.Length; i++)
+            ImportFiles.fileName.vinylList = File.ReadAllLines(ImportFiles.fileName.filePathString);
+            for (int i = 0; i < ImportFiles.fileName.vinylList.Length; i++)
             {
-                Console.WriteLine(i+1 + ". " + list[i]);
+                Console.WriteLine(i+1 + ". " + ImportFiles.fileName.vinylList[i]);
             }
             InputMenu();
             
@@ -259,7 +257,7 @@ namespace VinySamling
             int input=0;
             while (condition)
             {
-                Console.WriteLine("Välj vilken låt vill du ta bort [{0},{1}]:", 1, list.Length );
+                Console.WriteLine("Välj vilken låt vill du ta bort [{0},{1}]:", 1, ImportFiles.fileName.vinylList.Length );
                 try
                 {
                     input = int.Parse(Console.ReadLine());
@@ -268,17 +266,17 @@ namespace VinySamling
                 catch (Exception)
                 {
                     InputController.ClearOneLine();
-                    Console.WriteLine("Vänligen skriv in ett nummer mellan {0} och {1}", 1, list.Length );
+                    Console.WriteLine("Vänligen skriv in ett nummer mellan {0} och {1}", 1, ImportFiles.fileName.vinylList.Length );
                     Program.Timer(1.5);
                     InputController.ClearOneLine();
                 }
-                if (input <= list.Length  && input >= 1)
+                if (input <= ImportFiles.fileName.vinylList.Length  && input >= 1)
 
                     condition = false;
                 else
                 {
                     InputController.ClearOneLine();
-                    Console.WriteLine("Vänligen skriv in ett nummer mellan {0} och {1}", 1, list.Length);
+                    Console.WriteLine("Vänligen skriv in ett nummer mellan {0} och {1}", 1, ImportFiles.fileName.vinylList.Length);
                     InputController.ClearOneLine();
                 }
 

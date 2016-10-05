@@ -10,7 +10,6 @@ namespace VinySamling
     class ImportFiles
     {
         public static FileName fileName;
-        public static VinylList vinylList;
 
         static string filePath;
         public static string FilePath
@@ -20,25 +19,28 @@ namespace VinySamling
         }
    
         static string folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
         public static string FolderName
         {
             get { return folderName; }
             private set { folderName = value; }
         }
-        static string filePathString;
 
-        public static string FilePathString
-        {
-            get { return filePathString; }
-            set { filePathString = value; }
-        }
+        //static string filePathString;
+        //public static string FilePathString
+        //{
+        //    get { return filePathString; }
+        //    set { filePathString = value; }
+        //}
+
         public static void FileChoice()
         {
+            fileName = new FileName();
+
             Console.Clear();
             int caseSwitch;
             string input;
             string tempName;
+            
             while (true)
             {
                 GUI.FileChoiceGui();
@@ -58,23 +60,34 @@ namespace VinySamling
                         Console.Clear();
                         Console.WriteLine("\n\n  Skriv in listans namn som du vill skapa:");
                         tempName = Console.ReadLine();
-                        fileName = new FileName(tempName);
-                        ListCreator();
+                        fileName.name = tempName;
+                        fileName.filePathString = FilePath + @"\" + fileName.name + ".txt";
+                        File.WriteAllText(fileName.filePathString, "");
+                        fileName.vinylList = File.ReadAllLines(fileName.filePathString);
+
+                        
                         Console.WriteLine("Listan är skapade!!");
                         Program.Timer(1.5);
-                        return;
+                        Console.Clear();
+                        GUI.HeadGui();
+                        Database.Choice();
+                        break;
                     case 2:
                         Console.Clear();
                         Console.WriteLine("\n\n  Skriv in listans namn som du vill ladda upp:");
+
                         tempName = TryFindFile(Console.ReadLine());
-                        fileName = new FileName(tempName);
-                        string[] tempVinylList = File.ReadAllLines(FilePath + @"\" + fileName.name + ".txt");
-                        vinylList = new VinylList(tempVinylList);
-                        return;
+                        fileName.name = tempName;
+                        fileName.filePathString = FilePath + @"\" + fileName.name + ".txt";
+                        fileName.vinylList = File.ReadAllLines(fileName.filePathString);
+                        Console.Clear();
+                        GUI.HeadGui();
+                        Database.Choice();
+                        break;
                     case 3:
                         Console.Clear();
                         Instructions();
-                        return;
+                        break;
 
                     default:
                         Console.WriteLine("Vänlligen skriv in ett giltigt val 1,2 eller 3!");
@@ -140,19 +153,6 @@ namespace VinySamling
         }
 
 
-
-        public static VinylList ListCreator()
-        {
-            
-            filePathString = FilePath + @"\" + fileName.name + ".txt";
-
-            File.WriteAllText(filePathString, "");
-            string[] tempVinylList= File.ReadAllLines(filePathString);
-            vinylList = new VinylList(tempVinylList);
-            return vinylList;
-
-            
-        }
 
 
         

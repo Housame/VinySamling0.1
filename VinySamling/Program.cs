@@ -9,26 +9,13 @@ namespace VinySamling
 {
     class Program
     {
-        public static bool endProgram = true;
+
         static void Main(string[] args)
         {
             ImportFiles.PathCreator();
             GUI.StartGui();
-            
-            while (true)
-            {
-                
-                while (endProgram)
-                {
-                    ImportFiles.FileChoice();
+            ImportFiles.FileChoice();
 
-                    Console.Clear();
-                    GUI.HeadGui();
-                    Database.Choice();
-                }
-                
-                endProgram = true;
-            }
         }
 
         public static void Timer(double seconds)
@@ -45,14 +32,7 @@ namespace VinySamling
             }
         }
 
-        //public static void Restart()
-        //{
-        //    Environment.Exit(0);
-        //    ImportFiles.FileChoice();
-        //    Console.Clear();
-        //    GUI.HeadGui();
-        //    Database.Choice();
-        //}
 
-        }
+
+    }
 }
