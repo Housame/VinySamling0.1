@@ -10,9 +10,10 @@ namespace VinySamling
     class Database
 
     {
+        #region
         static string[] list= ImportFiles.VinylList ;
-        static string listPath = ImportFiles.FilePath +@"\"+ ImportFiles.FileName+".txt";
-        
+        static string listPath = ImportFiles.FilePath +@"\"+ ImportFiles.fileName.name+".txt";
+        #endregion
 
         public static void Choice()
         {
@@ -23,7 +24,7 @@ namespace VinySamling
                 GUI.MenuGui();
                 input = Console.ReadLine();
 
-                if (input == "1" || input == "2" || input == "3" || input == "4")
+                if (input == "1" || input == "2" || input == "3" || input == "4"|| input =="5"||input =="6")
 
                     caseSwitch = int.Parse(input);
 
@@ -44,6 +45,16 @@ namespace VinySamling
                         return;
                     case 4:
                         RemoveVinyl();
+                        return;
+                    case 5:
+                        ImportFiles.VinylList = null;
+                        Program.endProgram = false;
+                        
+                        return;
+                    case 6:
+                        GUI.ByeByeGui();
+                        Program.Timer(1.5);
+                        Environment.Exit(0);
                         return;
                     default:
                         Console.WriteLine("Vänlligen skriv in ett giltigt val 1,2,3 eller 4!");
@@ -75,7 +86,9 @@ namespace VinySamling
         private static void AddVinyl()
         {
 
-            
+            Console.Clear();
+            GUI.AddVinylGui();
+            Console.WriteLine("\n\n");
             Console.WriteLine();
             Vinyl.Name = InputController.NameController().ToUpper();
             Console.WriteLine();
@@ -134,7 +147,9 @@ namespace VinySamling
 
         private static void EditList()
         {
-            Console.WriteLine("\n");
+            Console.Clear();
+            GUI.EditListGui();
+            Console.WriteLine("\n\n");
             for (int i = 0; i < list.Length; i++)
             {
                 Console.WriteLine(i + 1 + ". " + list[i]);
@@ -173,8 +188,9 @@ namespace VinySamling
 
         private static void RemoveVinyl()
         {
-            
-            Console.WriteLine("\n");
+            Console.Clear();
+            GUI.RemoveVinylGui();
+            Console.WriteLine("\n\n");
             for (int i = 0; i < list.Length; i++)
             {
                 Console.WriteLine(i+1 + ". " + list[i]);

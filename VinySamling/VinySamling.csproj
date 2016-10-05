@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="FileName.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="ImportFiles.cs" />
     <Compile Include="InputController.cs" />
